@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login to Nikitha's World</title>
+    <style>
+        /* General Body Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000; /* Nikitha's favorite color: Black */
+            color: #ffffff; /* White text for contrast and readability */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            flex-direction: column; /* Allow content to stack if needed */
+        }
+
+        /* Login Container Styling */
+        .login-container {
+            background-color: #1a1a1a; /* Darker grey/black for the form background */
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.7); /* Stronger shadow for emphasis */
+            width: 100%;
+            max-width: 400px; /* Limit width for better readability */
+            box-sizing: border-box; /* Include padding in width */
+            margin: 20px; /* Add some margin around the container */
+        }
+
+        .login-container h1 {
+            font-size: 2.8em;
+            color: #e0e0e0;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Input Group Styling */
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left; /* Align labels and inputs */
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cccccc;
+            font-size: 1.1em;
+        }
+
+        .input-group input[type="text"],
+        .input-group input[type="password"] {
+            width: calc(100% - 20px); /* Full width minus padding */
+            padding: 12px 10px;
+            border: 1px solid #333333;
+            border-radius: 5px;
+            background-color: #0d0d0d; /* Even darker for input fields */
+            color: #ffffff;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group input[type="text"]:focus,
+        .input-group input[type="password"]:focus {
+            border-color: #666666; /* Lighter border on focus */
+            box-shadow: 0 0 8px rgba(102, 102, 102, 0.3);
+            outline: none;
+        }
+
+        /* Button Styling */
+        .form-button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 15px; /* Adjust margin for multiple buttons */
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        /* Primary button (Login) */
+        .form-button.primary {
+            background-color: #444444; /* Dark grey */
+            color: white;
+        }
+
+        .form-button.primary:hover {
+            background-color: #666666; /* Lighter grey on hover */
+            transform: translateY(-2px); /* Slight lift on hover */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Secondary button (Sign Up) */
+        .form-button.secondary {
+            background-color: #2a2a2a; /* Slightly lighter than container for contrast */
+            color: #cccccc; /* Lighter text color */
+            border: 1px solid #555555; /* Subtle border */
+        }
+
+        .form-button.secondary:hover {
+            background-color: #3a3a3a;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Message Styling */
+        #message {
+            margin-top: 20px;
+            font-size: 1em;
+            font-weight: bold;
+            min-height: 1.5em; /* Reserve space */
+        }
+
+        .success-message {
+            color: #4CAF50; /* Green for success */
+        }
+
+        .error-message {
+            color: #F44336; /* Red for error */
+        }
+
+        /* Links Styling */
+        .forgot-password-link {
+            margin-top: 20px;
+            font-size: 0.95em;
+        }
+
+        .forgot-password-link a {
+            color: #888888; /* Lighter grey for links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password-link a:hover {
+            color: #aaaaaa; /* Even lighter on hover */
+            text-decoration: underline;
+        }
+
+        /* Important Note for Demo */
+        .disclaimer-note {
+            margin-top: 30px;
+            font-size: 0.85em;
+            color: #888888;
+            max-width: 600px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login to Nikitha's World</h1>
+        <form id="authForm">
+            <div class="input-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="form-button primary" id="loginButton">Login</button>
+            <button type="button" class="form-button secondary" id="signupButton">Create Account</button>
+            <p id="message"></p>
+        </form>
+        <p class="forgot-password-link"><a href="#">Forgot Password?</a></p>
+    </div>
+
+    <p class="disclaimer-note">
+        This is a frontend-only login/signup demo. For real user authentication and security, server-side processing, database storage, and robust security measures are absolutely essential. This page does not store or validate credentials.
+    </p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const authForm = document.getElementById('authForm');
+            const loginButton = document.getElementById('loginButton');
+            const signupButton = document.getElementById('signupButton');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const messageElement = document.getElementById('message');
+
+            // --- Login Functionality ---
+            loginButton.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                // Simple client-side validation (for demo purposes only)
+                if (username === "" || password === "") {
+                    messageElement.textContent = "Please enter both username/email and password.";
+                    messageElement.className = "error-message";
+                } else if (username === "nikitha" && password === "danceandsing") { // Example credentials
+                    messageElement.textContent = "Login successful! Welcome, Nikitha!";
+                    messageElement.className = "success-message";
+                    // In a real application, you would redirect to a dashboard here
+                    // window.location.href = "/dashboard.html";
+                } else {
+                    messageElement.textContent = "Invalid username/email or password.";
+                    messageElement.className = "error-message";
+                }
+            });
+
+            // --- Signup Functionality ---
+            signupButton.addEventListener('click', () => {
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                if (username === "" || password === "") {
+                    messageElement.textContent = "Please enter a username/email and password for signup.";
+                    messageElement.className = "error-message";
+                } else {
+                    // In a real application, you would send this to a backend for user creation
+                    messageElement.textContent = `Account for '${username}' would be created! (This is a demo)`;
+                    messageElement.className = "success-message";
+                    // Clear fields after "signup"
+                    usernameInput.value = "";
+                    passwordInput.value = "";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
